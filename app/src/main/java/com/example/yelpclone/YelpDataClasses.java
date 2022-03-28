@@ -20,5 +20,5 @@ class YelpCategory{
 }
 
 class YelpLocation{
-    @SerializedName("address") String address;
+    @SerializedName("address1") String address;
 }
