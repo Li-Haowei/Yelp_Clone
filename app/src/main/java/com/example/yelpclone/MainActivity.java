@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         callAsync.enqueue(new Callback<YelpDataClasses>() {
             @Override
             public void onResponse(Call<YelpDataClasses> call, Response<YelpDataClasses> response) {
-                Log.d("creation", "onResponse " + response.body().restaurants[0].name);
+                Log.d("creation", "onResponse " + response.body().restaurants[0].location.address);
             }
 
             @Override
