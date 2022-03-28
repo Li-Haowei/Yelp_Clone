@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,9 +16,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String BASE_URL = "https://api.yelp.com/v3/";
-    public Gson gson;
-    public Retrofit retrofit;
+    private static final String BASE_URL = "https://api.yelp.com/v3/";
+    private static final String API_KEY = "LRODHsBmKivCuPY8DmDdauyGsR1rCuIwi7bYG9UyisX0hJQtG_Xj9dHNewuqW5F4s04G8hpf7DkBFuPOIW5eD7M6WYD4DX4BWMvRntAzhqW3wuhnLFl4J4BBGpk_YnYx";
+    private Gson gson;
+    private Retrofit retrofit;
     private YelpService yp;
 
     @Override
@@ -30,18 +32,18 @@ public class MainActivity extends AppCompatActivity {
                 .create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
         yp = retrofit.create(YelpService.class);
-        yp.searchRestaurants("Avocado Toast","New York").enqueue(new Callback<String>() {
+        yp.searchRestaurants("Bearer " + API_KEY,"Avocado Toast","New York").enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.d("creation", "response.toString()");
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.d("creation", "onResponse " + response.body());
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.d("creation", "failed");
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("creation", "onFail " + t);
             }
         });
 
