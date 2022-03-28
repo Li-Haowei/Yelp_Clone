@@ -3,6 +3,9 @@ package com.example.yelpclone;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,10 +17,16 @@ public class MainActivity extends AppCompatActivity {
     private static final String API_KEY = "LRODHsBmKivCuPY8DmDdauyGsR1rCuIwi7bYG9UyisX0hJQtG_Xj9dHNewuqW5F4s04G8hpf7DkBFuPOIW5eD7M6WYD4DX4BWMvRntAzhqW3wuhnLFl4J4BBGpk_YnYx";
     private Retrofit retrofit;
     private YelpService yp;
+    private EditText txFood;
+    private EditText txLocation;
+    private Button btnSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        txFood = findViewById(R.id.txFood);
+        txLocation = findViewById(R.id.txLocation);
+        btnSearch = findViewById(R.id.btnSearch);
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -28,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<YelpDataClasses> call, Response<YelpDataClasses> response) {
                 for (int i = 0; i < response.body().restaurants.length; i++) {
-                    Log.d("creation", "onResponse " + response.body().restaurants[i].name);
+                    Log.d("creation", "name: " + response.body().restaurants[i].name + ", image: " + response.body().restaurants[i].imageUrl);
                 }
             }
 
