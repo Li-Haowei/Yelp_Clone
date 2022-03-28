@@ -1,9 +1,13 @@
 package com.example.yelpclone;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,16 +25,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL = "https://api.yelp.com/v3/";
     private static final String API_KEY = "LRODHsBmKivCuPY8DmDdauyGsR1rCuIwi7bYG9UyisX0hJQtG_Xj9dHNewuqW5F4s04G8hpf7DkBFuPOIW5eD7M6WYD4DX4BWMvRntAzhqW3wuhnLFl4J4BBGpk_YnYx";
-    private Gson gson;
+    private RecyclerView rvRestaurant;
     private Retrofit retrofit;
     private YelpService yp;
+    private int currentSize = 10;
+    private int currentIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        YelpRestaurants[] restaurants = new YelpRestaurants[10];
-        RestaurantsAdapter rd = new RestaurantsAdapter(this, restaurants);
+        YelpRestaurants[] restaurants = new YelpRestaurants[currentSize];
+        RestaurantsAdapter adapter = new RestaurantsAdapter(MainActivity.this, restaurants);
+        rvRestaurant = findViewById(R.id.rvRestaurants);
+        rvRestaurant.setAdapter(adapter);
+        rvRestaurant.setLayoutManager(new LinearLayoutManager(this));
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -50,5 +59,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void increment(){
+        currentSize += 10;
+        YelpRestaurants[] restaurants = new YelpRestaurants[currentSize];
     }
 }
