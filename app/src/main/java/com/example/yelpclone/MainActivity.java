@@ -35,14 +35,15 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         yp = retrofit.create(YelpService.class);
-        yp.searchRestaurants("Bearer " + API_KEY,"Avocado Toast","New York").enqueue(new Callback<Object>() {
+        Call<YelpDataClasses> callAsync = yp.searchRestaurants("Bearer " + API_KEY,"Avocado Toast","New York");
+        callAsync.enqueue(new Callback<YelpDataClasses>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
-                Log.d("creation", "onResponse " + response.body());
+            public void onResponse(Call<YelpDataClasses> call, Response<YelpDataClasses> response) {
+                Log.d("creation", "onResponse " + response);
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<YelpDataClasses> call, Throwable t) {
                 Log.d("creation", "onFail " + t);
             }
         });
