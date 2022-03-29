@@ -15,7 +15,7 @@
         android:layout_marginBottom="37dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Type of Food"
+        android:text="Food"
         app:layout_constraintBottom_toTopOf="@+id/txLocation"
         app:layout_constraintStart_toStartOf="@+id/txLocation" />
 
