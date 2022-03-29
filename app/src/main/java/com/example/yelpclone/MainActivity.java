@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(Call<YelpDataClasses> call, Response<YelpDataClasses> response) {
                         ArrayList<YelpDataClasses> restaurants = new ArrayList<YelpDataClasses>();
                         Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
-                        intent.putExtra("length", response.body().total);
+                        intent.putExtra("length", response.body().restaurants.length);
                         for (int i = 0; i < response.body().restaurants.length; i++) {
                             //Log.d("creation", "name: " + response.body().restaurants[i].name + ", image: " + response.body().restaurants[i].imageUrl);
                             //restaurants.add(response.body());

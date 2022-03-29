@@ -43,12 +43,14 @@ public class DisplayActivity extends AppCompatActivity {
         scrollView.addView(linearLayout);
 
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params1.setMargins(0, 30, 0, 30);
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params1.setMargins(0, 0, 0, 30);
         params1.gravity = Gravity.CENTER;
+        params2.gravity = Gravity.CENTER;
         for (int i = 0; i < length; i++) {
             restaurants[i] = new TextView(this);
             restaurants[i].setText(names[i]);
-            restaurants[i].setLayoutParams(params1);
+            restaurants[i].setLayoutParams(params2);
             linearLayout.addView(restaurants[i]);
 
             images[i] = new ImageView(this);
