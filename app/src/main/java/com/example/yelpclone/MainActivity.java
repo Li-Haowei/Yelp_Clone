@@ -1,6 +1,8 @@
 package com.example.yelpclone;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -8,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.time.Duration;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,9 +50,16 @@ public class MainActivity extends AppCompatActivity {
                 callAsync.enqueue(new Callback<YelpDataClasses>() {
                     @Override
                     public void onResponse(Call<YelpDataClasses> call, Response<YelpDataClasses> response) {
+                        ArrayList<YelpDataClasses> restaurants = new ArrayList<YelpDataClasses>();
+                        Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+                        intent.putExtra("length", response.body().total);
                         for (int i = 0; i < response.body().restaurants.length; i++) {
-                            Log.d("creation", "name: " + response.body().restaurants[i].name + ", image: " + response.body().restaurants[i].imageUrl);
+                            //Log.d("creation", "name: " + response.body().restaurants[i].name + ", image: " + response.body().restaurants[i].imageUrl);
+                            //restaurants.add(response.body());
+                            intent.putExtra(""+i,response.body().restaurants[i].name);
+                            intent.putExtra("image"+i,response.body().restaurants[i].imageUrl);
                         }
+                        MainActivity.this.startActivity(intent);
                     }
 
                     @Override
