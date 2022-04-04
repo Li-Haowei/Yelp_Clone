@@ -17,6 +17,9 @@ public class DisplayActivity extends AppCompatActivity {
     private TextView[] restaurants;
     private String[] ImageURLs;
     private ImageView[] images;
+    private String[] location;
+    private String[] price;
+    private String[] rating;
     private int length;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +30,16 @@ public class DisplayActivity extends AppCompatActivity {
         images = new ImageView[length];
         restaurants = new TextView[length];
         ImageURLs = new String[length];
+        price = new String[length];
+        location = new String[length];
+        rating = new String[length];
         names = new String[length];
         for (int i = 0; i < length; i++) {
             names[i] = intent.getStringExtra(""+i);
             ImageURLs[i] = intent.getStringExtra("image"+i);
+            price[i] = intent.getStringExtra("price"+i);
+            rating[i] = intent.getStringExtra("rating"+i);
+            location[i] = intent.getStringExtra("location"+i);
         }
 
         ScrollView scrollView = new ScrollView(this);
@@ -49,7 +58,7 @@ public class DisplayActivity extends AppCompatActivity {
         params2.gravity = Gravity.CENTER;
         for (int i = 0; i < length; i++) {
             restaurants[i] = new TextView(this);
-            restaurants[i].setText(names[i]);
+            restaurants[i].setText(names[i]+'\n'+ rating[i]+'\n'+ price[i]+'\n'+ location[i]+'\n');
             restaurants[i].setLayoutParams(params2);
             linearLayout.addView(restaurants[i]);
 

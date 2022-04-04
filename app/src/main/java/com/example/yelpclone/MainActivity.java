@@ -54,9 +54,10 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
                         intent.putExtra("length", response.body().restaurants.length);
                         for (int i = 0; i < response.body().restaurants.length; i++) {
-                            //Log.d("creation", "name: " + response.body().restaurants[i].name + ", image: " + response.body().restaurants[i].imageUrl);
-                            //restaurants.add(response.body());
                             intent.putExtra(""+i,response.body().restaurants[i].name);
+                            intent.putExtra("rating"+i,response.body().restaurants[i].rating);
+                            intent.putExtra("price"+i,response.body().restaurants[i].price);
+                            intent.putExtra("location"+i,response.body().restaurants[i].location.address);
                             intent.putExtra("image"+i,response.body().restaurants[i].imageUrl);
                         }
                         MainActivity.this.startActivity(intent);
