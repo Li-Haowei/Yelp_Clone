@@ -3,9 +3,12 @@ package com.example.yelpclone;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 public class DisplayActivity extends AppCompatActivity {
     private String[] names;
     private TextView[] restaurants;
+    private TextView[] locations;
     private String[] ImageURLs;
     private ImageView[] images;
     private String[] location;
@@ -29,6 +33,8 @@ public class DisplayActivity extends AppCompatActivity {
         length = intent.getIntExtra("length",0);
         images = new ImageView[length];
         restaurants = new TextView[length];
+        locations = new TextView[length];
+
         ImageURLs = new String[length];
         price = new String[length];
         location = new String[length];
@@ -54,21 +60,40 @@ public class DisplayActivity extends AppCompatActivity {
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params1.setMargins(0, 0, 0, 30);
+        params2.setMargins(0, 0, 0, 0);
         params1.gravity = Gravity.CENTER;
         params2.gravity = Gravity.CENTER;
         for (int i = 0; i < length; i++) {
             restaurants[i] = new TextView(this);
-            restaurants[i].setText(names[i]+'\n'+ rating[i]+'\n'+ price[i]+'\n'+ location[i]+'\n');
+            restaurants[i].setText("Name: " + names[i]+'\n'+ "Rating: " + rating[i]+'\n'+ "Price: " + price[i]+'\n');
+            restaurants[i].setTextColor(Color.parseColor("#000000"));
             restaurants[i].setLayoutParams(params2);
             linearLayout.addView(restaurants[i]);
+
+            locations[i] = new TextView(this);
+            locations[i].setText(location[i]);
+            locations[i].setTextColor(Color.parseColor("#0027b3"));
+            locations[i].setLayoutParams(params2);
+            setOnClick(locations[i], i);
+            linearLayout.addView(locations[i]);
 
             images[i] = new ImageView(this);
             images[i].setLayoutParams(params1);
             new ImageLoadTask(ImageURLs[i], images[i]).execute();
             linearLayout.addView(images[i]);
-
         }
         LinearLayout linear = findViewById(R.id.rootContainer);
         linear.addView(scrollView);
+    }
+    private void setOnClick(final TextView tv, final int i){
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String loc = location[i];
+                loc = loc.replace(' ', '+');
+                Intent geoLocationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + loc));
+                startActivity(geoLocationIntent);
+            }
+        });
     }
 }
