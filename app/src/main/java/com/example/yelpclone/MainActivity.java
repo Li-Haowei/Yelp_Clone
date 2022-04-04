@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         yp = retrofit.create(YelpService.class);
 
         btnSearch.setOnClickListener(view->{
-
+            loading();
             if((etFood.getText().toString().equals("Food") ||etFood.getText().toString().length()==0 )||
                     (etLocation.getText().toString().equals("Location") ||etFood.getText().toString().length()==0 )){
                 Toast toast = Toast.makeText(this, "You haven't input anything", Toast.LENGTH_LONG);
@@ -66,10 +66,17 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<YelpDataClasses> call, Throwable t) {
+                        loadingFailed();
                         Log.d("creation", "onFail " + t);
                     }
                 });
             }
         });
+    }
+    private void loading(){
+        Toast.makeText(this,"Loading",Toast.LENGTH_SHORT).show();
+    }
+    private void loadingFailed(){
+        Toast.makeText(this,"Try Again",Toast.LENGTH_SHORT).show();
     }
 }

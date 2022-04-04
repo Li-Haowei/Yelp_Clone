@@ -73,7 +73,7 @@ public class DisplayActivity extends AppCompatActivity {
         for (int i = 0; i < length; i++) {
             //name of restaurants
             restaurants[i] = new TextView(this);
-            restaurants[i].setText("Name: " + names[i]);
+            restaurants[i].setText(names[i]);
             restaurants[i].setTextColor(Color.parseColor("#000000"));
             restaurants[i].setTextAppearance(R.style.fontForRestaurant);
             restaurants[i].setLayoutParams(params2);
@@ -81,7 +81,7 @@ public class DisplayActivity extends AppCompatActivity {
 
             //ratings of restaurants
             ratings[i] = new TextView(this);
-            ratings[i].setText("Rating: " + rating[i]+'\n'+ "Price: " + price[i]+'\n');
+            ratings[i].setText("Rating: " + rating[i]);
             ratings[i].setTextColor(Color.parseColor("#000000"));
             ratings[i].setTextAppearance(R.style.fontForRating);
             ratings[i].setLayoutParams(params2);
@@ -89,7 +89,7 @@ public class DisplayActivity extends AppCompatActivity {
 
             //ratings of restaurants
             prices[i] = new TextView(this);
-            prices[i].setText("Price: " + price[i]+'\n');
+            prices[i].setText("Price: " + price[i]);
             prices[i].setTextColor(Color.parseColor("#000000"));
             prices[i].setTextAppearance(R.style.fontForPrice);
             prices[i].setLayoutParams(params2);
