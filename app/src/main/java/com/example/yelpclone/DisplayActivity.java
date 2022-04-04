@@ -1,10 +1,12 @@
 package com.example.yelpclone;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 public class DisplayActivity extends AppCompatActivity {
     private String[] names;
     private TextView[] restaurants;
+    private TextView[] ratings;
+    private TextView[] prices;
     private TextView[] locations;
     private String[] ImageURLs;
     private ImageView[] images;
@@ -25,6 +29,7 @@ public class DisplayActivity extends AppCompatActivity {
     private String[] price;
     private String[] rating;
     private int length;
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +39,8 @@ public class DisplayActivity extends AppCompatActivity {
         images = new ImageView[length];
         restaurants = new TextView[length];
         locations = new TextView[length];
+        ratings = new TextView[length];
+        prices = new TextView[length];
 
         ImageURLs = new String[length];
         price = new String[length];
@@ -64,12 +71,31 @@ public class DisplayActivity extends AppCompatActivity {
         params1.gravity = Gravity.CENTER;
         params2.gravity = Gravity.CENTER;
         for (int i = 0; i < length; i++) {
+            //name of restaurants
             restaurants[i] = new TextView(this);
-            restaurants[i].setText("Name: " + names[i]+'\n'+ "Rating: " + rating[i]+'\n'+ "Price: " + price[i]+'\n');
+            restaurants[i].setText("Name: " + names[i]);
             restaurants[i].setTextColor(Color.parseColor("#000000"));
+            restaurants[i].setTextAppearance(R.style.fontForRestaurant);
             restaurants[i].setLayoutParams(params2);
             linearLayout.addView(restaurants[i]);
 
+            //ratings of restaurants
+            ratings[i] = new TextView(this);
+            ratings[i].setText("Rating: " + rating[i]+'\n'+ "Price: " + price[i]+'\n');
+            ratings[i].setTextColor(Color.parseColor("#000000"));
+            ratings[i].setTextAppearance(R.style.fontForRating);
+            ratings[i].setLayoutParams(params2);
+            linearLayout.addView(ratings[i]);
+
+            //ratings of restaurants
+            prices[i] = new TextView(this);
+            prices[i].setText("Price: " + price[i]+'\n');
+            prices[i].setTextColor(Color.parseColor("#000000"));
+            prices[i].setTextAppearance(R.style.fontForPrice);
+            prices[i].setLayoutParams(params2);
+            linearLayout.addView(prices[i]);
+
+            //locations of restaurants
             locations[i] = new TextView(this);
             locations[i].setText(location[i]);
             locations[i].setTextColor(Color.parseColor("#0027b3"));

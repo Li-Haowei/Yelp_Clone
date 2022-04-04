@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         yp = retrofit.create(YelpService.class);
 
         btnSearch.setOnClickListener(view->{
+
             if((etFood.getText().toString().equals("Food") ||etFood.getText().toString().length()==0 )||
                     (etLocation.getText().toString().equals("Location") ||etFood.getText().toString().length()==0 )){
                 Toast toast = Toast.makeText(this, "You haven't input anything", Toast.LENGTH_LONG);
