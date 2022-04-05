@@ -31,28 +31,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        etFood = findViewById(R.id.txFood);
-        etLocation = findViewById(R.id.txLocation);
-        btnSearch = findViewById(R.id.btnSearch);
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+
+        etFood = findViewById(R.id.txFood); //input field for food
+        etLocation = findViewById(R.id.txLocation); //input field for location
+        btnSearch = findViewById(R.id.btnSearch); //search button
+
+        retrofit = new Retrofit.Builder() //build a new Retrofit class
+                .baseUrl(BASE_URL) //Base url, all Yelp fusion API endpoints
+                .addConverterFactory(GsonConverterFactory.create()) //This is the adapter that converts JSON data into GSON which can be read and write by Java(not the only way)
                 .build();
-        yp = retrofit.create(YelpService.class);
+        yp = retrofit.create(YelpService.class); //this class reads the GSON file
 
         btnSearch.setOnClickListener(view->{
-            loading();
+            loading(); //Toast message
             if((etFood.getText().toString().equals("Food") ||etFood.getText().toString().length()==0 )||
                     (etLocation.getText().toString().equals("Location") ||etFood.getText().toString().length()==0 )){
+                //check if user input something
                 Toast toast = Toast.makeText(this, "You haven't input anything", Toast.LENGTH_LONG);
                 toast.show();
             }else{
+                //Authentication : https://www.yelp.com/developers/documentation/v3/authentication, Query(term), Query(location)
+                //For example: "Bearer API_KEY BBQ Boston", why? because retrofit works that way
                 callAsync = yp.searchRestaurants("Bearer " + API_KEY,etFood.getText().toString(),etLocation.getText().toString());
+                //Retrofit has two call method: Call.execute() (Synchronously) and Call.enqueue() (Asynchronously) Methods : https://howtodoinjava.com/retrofit2/retrofit-sync-async-calls/
+                //In other words, execute() runs the request on the current thread, enqueue() runs the request on the background thread and runs the callback on the current thread
                 callAsync.enqueue(new Callback<YelpDataClasses>() {
                     @Override
                     public void onResponse(Call<YelpDataClasses> call, Response<YelpDataClasses> response) {
-                        ArrayList<YelpDataClasses> restaurants = new ArrayList<YelpDataClasses>();
-                        Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+                        Intent intent = new Intent(MainActivity.this, DisplayActivity.class); //This will be our display class
+                        //Everything below will be the information for display
                         intent.putExtra("length", response.body().restaurants.length);
                         for (int i = 0; i < response.body().restaurants.length; i++) {
                             intent.putExtra(""+i,response.body().restaurants[i].name);
@@ -66,13 +73,14 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<YelpDataClasses> call, Throwable t) {
-                        loadingFailed();
-                        Log.d("creation", "onFail " + t);
+                        loadingFailed(); //Toast message
+                        Log.d("creation", "onFail " + t); //debug purpose
                     }
                 });
             }
         });
     }
+    //Toast messages
     private void loading(){
         Toast.makeText(this,"Loading",Toast.LENGTH_SHORT).show();
     }

@@ -2,6 +2,7 @@ package com.example.yelpclone;
 
 import com.google.gson.annotations.SerializedName;
 
+//This is the class where we parse the Gson file, the response
 public class YelpDataClasses {
     @SerializedName("total") int total;
     @SerializedName("businesses") YelpRestaurants[] restaurants;

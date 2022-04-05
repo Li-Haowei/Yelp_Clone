@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
+/*
+This class is for displaying information
+ */
 public class DisplayActivity extends AppCompatActivity {
     private String[] names;
     private TextView[] restaurants;
@@ -36,25 +38,27 @@ public class DisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display);
         Intent intent = getIntent();
         length = intent.getIntExtra("length",0);
+        //This is for dynamically/programmatically displaying information
         images = new ImageView[length];
         restaurants = new TextView[length];
         locations = new TextView[length];
         ratings = new TextView[length];
         prices = new TextView[length];
-
+        //This will be used to contain the information from intent
         ImageURLs = new String[length];
         price = new String[length];
         location = new String[length];
         rating = new String[length];
         names = new String[length];
         for (int i = 0; i < length; i++) {
+            //get information
             names[i] = intent.getStringExtra(""+i);
             ImageURLs[i] = intent.getStringExtra("image"+i);
             price[i] = intent.getStringExtra("price"+i);
             rating[i] = intent.getStringExtra("rating"+i);
             location[i] = intent.getStringExtra("location"+i);
         }
-
+        //Implementing a scrollview which will be used to display the information
         ScrollView scrollView = new ScrollView(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         scrollView.setLayoutParams(layoutParams);
@@ -63,13 +67,13 @@ public class DisplayActivity extends AppCompatActivity {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setLayoutParams(linearParams);
         scrollView.addView(linearLayout);
-
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params1.setMargins(0, 0, 0, 30);
         params2.setMargins(0, 0, 0, 0);
         params1.gravity = Gravity.CENTER;
         params2.gravity = Gravity.CENTER;
+        //This will be the for loop to load the information into the templates
         for (int i = 0; i < length; i++) {
             //name of restaurants
             restaurants[i] = new TextView(this);
@@ -112,6 +116,7 @@ public class DisplayActivity extends AppCompatActivity {
         linear.addView(scrollView);
     }
     private void setOnClick(final TextView tv, final int i){
+        //this customized onclick is meant to parse information into onclick event, which original onclick event can't
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
